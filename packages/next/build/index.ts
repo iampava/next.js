@@ -924,6 +924,7 @@ export default async function build(
       })
 
       const buildManifestPath = path.join(distDir, BUILD_MANIFEST)
+      const prerenderManifestPath = path.join(distDir, PRERENDER_MANIFEST)
 
       const ssgPages = new Set<string>()
       const ssgStaticFallbackPages = new Set<string>()
@@ -2170,6 +2171,31 @@ export default async function build(
           dynamicRoutes: finalDynamicRoutes,
           notFoundRoutes: ssgNotFoundPaths,
           preview: previewProps,
+        }
+
+        // Here the PRERENDER_MANIFEST is written
+        if (config.cleanDistDir === false) {
+          Log.info(
+            `[Custom] 'cleanDistDir' is false. Merging previous PRERENDER_MANIFEST.`
+          )
+          try {
+            const previousPrerenderManifest = JSON.parse(
+              await promises.readFile(prerenderManifestPath, 'utf-8')
+            ) as PrerenderManifest
+            prerenderManifest.routes = {
+              ...previousPrerenderManifest.routes,
+              ...prerenderManifest.routes,
+            }
+          } catch (err) {
+            if (err instanceof Error) {
+              Log.error(
+                "[Custom] Couldn't read the previous PRERENDER_MANIFEST",
+                err.toString()
+              )
+            } else {
+              console.error('[Custom] Unknown error type', err)
+            }
+          }
         }
 
         await promises.writeFile(

@@ -9,6 +9,7 @@ import { trace } from '../trace'
 import isError from '../lib/is-error'
 import { getProjectDir } from '../lib/get-project-dir'
 
+// Here is next export starting point
 const nextExport: cliCommand = (argv) => {
   const nextExportCliSpan = trace('next-export-cli')
   const validArgs: arg.Spec = {

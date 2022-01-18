@@ -8,6 +8,7 @@ export const APP_PATHS_MANIFEST = 'app-paths-manifest.json'
 export const BUILD_MANIFEST = 'build-manifest.json'
 export const EXPORT_MARKER = 'export-marker.json'
 export const EXPORT_DETAIL = 'export-detail.json'
+// Here is the prerender_manifest
 export const PRERENDER_MANIFEST = 'prerender-manifest.json'
 export const ROUTES_MANIFEST = 'routes-manifest.json'
 export const IMAGES_MANIFEST = 'images-manifest.json'
